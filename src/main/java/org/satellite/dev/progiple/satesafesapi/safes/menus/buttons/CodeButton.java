@@ -8,10 +8,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.novasparkle.lunaspring.API.Menus.IMenu;
 import org.novasparkle.lunaspring.API.Menus.Items.Item;
 import org.novasparkle.lunaspring.API.Menus.MenuManager;
+import org.satellite.dev.progiple.satesafesapi.Config;
 import org.satellite.dev.progiple.satesafesapi.safes.menus.Code;
 import org.satellite.dev.progiple.satesafesapi.safes.menus.SafeMenu;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Setter
 public class CodeButton extends Item {
@@ -54,6 +57,12 @@ public class CodeButton extends Item {
         this.setDisplayName(this.default_name);
     }
 
+    public void setPicked(ConfigurationSection section) {
+        this.picked_lore = new ArrayList<>(section.getStringList("lore"));
+        this.picked_material = Material.getMaterial(Objects.requireNonNull(section.getString("material")));
+        this.picked_name = section.getString("displayName");
+    }
+
     @Override
     public void onClick(InventoryClickEvent e) {
         IMenu iMenu = MenuManager.getActiveInventories().get(e.getInventory());
@@ -63,9 +72,14 @@ public class CodeButton extends Item {
             Code code = safeMenu.getCode();
             if (code.getPicked_combination().contains(String.valueOf(this.getSlot()))) return;
 
+            Config.debug(String.format("%s - %s - %s", code.getPicked_combination(), this.getSlot(), code.getCombination()));
             if (code.getLength() == code.getPicked_combination().length()) {
                 if (!code.check()) {
-                    safeMenu.getButtonList().forEach(CodeButton::reset_button);
+                    safeMenu.getButtonList().forEach(b -> {
+                        b.reset_button();
+                        b.insert(safeMenu);
+                    });
+
                     safeMenu.getSafe().onBadAttempt(player);
                     code.clear();
                 }

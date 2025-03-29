@@ -3,6 +3,12 @@ version: '${project.version}'
 main: org.satellite.dev.progiple.satesafesapi.SateSafesAPI
 api-version: '1.16'
 authors: [ProGiple]
+commands:
+  satesafesapi:
+    aliases:
+      - ssapi
+      - safeapi
+      - safesapi
 depend:
   - LunaSpring
   - NBTAPI

@@ -2,6 +2,7 @@ package org.satellite.dev.progiple.satesafesapi.safes.menus;
 
 import lombok.Getter;
 import org.novasparkle.lunaspring.API.Util.utilities.Utils;
+import org.satellite.dev.progiple.satesafesapi.Config;
 
 @Getter
 public class Code {
@@ -15,11 +16,15 @@ public class Code {
     }
 
     public boolean check() {
+        Config.debug("picked: " + this.picked_combination);
+        Config.debug("length: " + this.length);
+        Config.debug("combination: " + this.combination);
         return this.picked_combination.length() == this.length && this.picked_combination.equalsIgnoreCase(this.combination);
     }
 
     public void addValue(int index) {
         this.picked_combination = String.format("%s%s", this.picked_combination, index);
+        Config.debug(this.picked_combination);
     }
 
     public void clear() {

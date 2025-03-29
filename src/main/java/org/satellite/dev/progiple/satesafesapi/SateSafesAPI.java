@@ -9,8 +9,10 @@ public final class SateSafesAPI extends LunaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
+        this.saveDefaultConfig();
 
         this.registerListener(new BasicHandlers());
+        this.registerCommand(new Command(), "satesafesapi");
         this.initialize();
     }
 
