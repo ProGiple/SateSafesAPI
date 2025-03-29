@@ -69,8 +69,11 @@ public class CodeButton extends Item {
         Player player = iMenu.getPlayer();
 
         String nick = player.getName().toLowerCase();
+        Config.debug(iMenu instanceof SafeMenu);
         if (iMenu instanceof SafeMenu safeMenu) {
             Code code = safeMenu.getCode();
+            Config.debug(code.getPicked_combination());
+            Config.debug(code.getPicked_combination().containsKey(nick));
             if (code.getPicked_combination().containsKey(nick) && code.getPicked_combination().get(nick).contains(String.valueOf(this.getSlot()))) return;
 
             code.addValue(nick, this.getSlot());

@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.novasparkle.lunaspring.API.Events.CooldownPrevent;
 import org.novasparkle.lunaspring.API.Menus.IMenu;
 import org.novasparkle.lunaspring.API.Util.utilities.Utils;
+import org.satellite.dev.progiple.satesafesapi.Config;
 import org.satellite.dev.progiple.satesafesapi.safes.Safe;
 import org.satellite.dev.progiple.satesafesapi.safes.menus.buttons.CodeButton;
 
@@ -36,6 +37,7 @@ public class SafeMenu implements IMenu {
         this.safe = safe;
         this.code = this.safe.getCode();
         this.inventory = Bukkit.createInventory(player, InventoryType.DISPENSER, Utils.color(title));
+        this.cooldownPrevent.setCooldownMS(75);
     }
 
     @Override
@@ -50,7 +52,9 @@ public class SafeMenu implements IMenu {
 
         e.setCancelled(true);
         for (CodeButton button : this.buttonList) {
+            Config.debug(button.getId());
             if (button.checkId(item)) {
+                Config.debug("!");
                 button.onClick(e);
                 return;
             }

@@ -29,7 +29,7 @@ public class Code {
     }
 
     public void addValue(String nick, int index) {
-        this.picked_combination.compute(nick, (k, comb) -> String.format("%s%s", comb, index));
+        this.picked_combination.compute(nick, (k, comb) -> String.format("%s%s", comb == null || comb.isEmpty() ? "" : comb.replace("null", ""), index));
         Config.debug(this.picked_combination);
     }
 
