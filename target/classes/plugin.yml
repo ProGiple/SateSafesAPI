@@ -1,8 +1,14 @@
 name: SateSafesAPI
-version: '1.0.2.3'
+version: '1.0.3'
 main: org.satellite.dev.progiple.satesafesapi.SateSafesAPI
 api-version: '1.16'
 authors: [ProGiple]
+commands:
+  satesafesapi:
+    aliases:
+      - ssapi
+      - safeapi
+      - safesapi
 depend:
   - LunaSpring
   - NBTAPI
