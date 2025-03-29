@@ -8,7 +8,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.novasparkle.lunaspring.API.Menus.IMenu;
 import org.novasparkle.lunaspring.API.Menus.Items.Item;
 import org.novasparkle.lunaspring.API.Menus.MenuManager;
-import org.novasparkle.lunaspring.API.Util.utilities.LunaMath;
 import org.satellite.dev.progiple.satesafesapi.safes.menus.Code;
 import org.satellite.dev.progiple.satesafesapi.safes.menus.SafeMenu;
 
@@ -66,15 +65,7 @@ public class CodeButton extends Item {
 
             if (code.getLength() == code.getPicked_combination().length()) {
                 if (!code.check()) {
-                    int index = 0;
-                    for (CodeButton codeButton : safeMenu.getButtonList()) {
-                        if (LunaMath.toInt(code.getPicked_combination().charAt(index)) == codeButton.getSlot()) {
-                            codeButton.reset_button();
-                            codeButton.insert(safeMenu);
-                            index++;
-                        }
-                    }
-
+                    safeMenu.getButtonList().forEach(CodeButton::reset_button);
                     safeMenu.getSafe().onBadAttempt(player);
                     code.clear();
                 }
