@@ -73,6 +73,7 @@ public class CodeButton extends Item {
             if (code.getPicked_combination().contains(String.valueOf(this.getSlot()))) return;
 
             Config.debug(String.format("%s - %s - %s", code.getPicked_combination(), this.getSlot(), code.getCombination()));
+            code.addValue(this.getSlot());
             if (code.getLength() == code.getPicked_combination().length()) {
                 if (!code.check()) {
                     safeMenu.getButtonList().forEach(b -> {
@@ -89,8 +90,6 @@ public class CodeButton extends Item {
                 if (this.picked_material != null) this.setMaterial(this.picked_material);
 
                 if (this.picked_lore != null) this.setLore(this.picked_lore);
-
-                code.addValue(this.getSlot());
                 this.insert(safeMenu);
             }
 
