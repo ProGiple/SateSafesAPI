@@ -15,11 +15,11 @@ public class Code {
     private final Map<String, String> picked_combination = new HashMap<>();
     public Code(int length) {
         this.length = Math.min(Math.max(length, 2), 9);
-        this.combination = Utils.getRKey((byte) this.length, "012345678");
+        this.combination = Utils.getRKey((byte) this.length, "123456789");
     }
 
     public boolean check(String nick) {
-        String comb = this.picked_combination.get(nick);
+        String comb = this.picked_combination.get(nick.toLowerCase());
         if (comb == null) return false;
         Config.debug("picked: " + this.picked_combination);
         Config.debug("length: " + this.length);
@@ -29,11 +29,12 @@ public class Code {
     }
 
     public void addValue(String nick, int index) {
-        this.picked_combination.compute(nick, (k, comb) -> String.format("%s%s", comb == null || comb.isEmpty() ? "" : comb.replace("null", ""), index));
+        this.picked_combination.compute(nick.toLowerCase(),
+                (k, comb) -> String.format("%s%s", comb == null || comb.isEmpty() ? "" : comb.replace("null", ""), index + 1));
         Config.debug(this.picked_combination);
     }
 
     public void clear(String nick) {
-        this.picked_combination.remove(nick);
+        this.picked_combination.remove(nick.toLowerCase());
     }
 }

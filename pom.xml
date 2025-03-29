@@ -6,7 +6,7 @@
 
   <groupId>org.satellite.dev.progiple</groupId>
   <artifactId>SateSafesAPI</artifactId>
-  <version>1.0.3.5</version>
+  <version>1.0.3.6</version>
   <packaging>jar</packaging>
 
   <name>SateSafesAPI</name>

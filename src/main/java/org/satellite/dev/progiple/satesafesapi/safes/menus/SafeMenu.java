@@ -22,7 +22,7 @@ import java.util.List;
 
 @Getter
 public class SafeMenu implements IMenu {
-    private final CooldownPrevent<Integer> cooldownPrevent = new CooldownPrevent<>();
+    private final CooldownPrevent<Byte> cooldownPrevent = new CooldownPrevent<>(30);
 
     private final Player player;
     private final Inventory inventory;
@@ -37,7 +37,6 @@ public class SafeMenu implements IMenu {
         this.safe = safe;
         this.code = this.safe.getCode();
         this.inventory = Bukkit.createInventory(player, InventoryType.DISPENSER, Utils.color(title));
-        this.cooldownPrevent.setCooldownMS(75);
     }
 
     @Override
@@ -48,7 +47,7 @@ public class SafeMenu implements IMenu {
     @Override
     public void onClick(InventoryClickEvent e) {
         ItemStack item = e.getCurrentItem();
-        if (item == null || item.getType() == Material.AIR || this.isCancelled(e, e.getSlot())) return;
+        if (item == null || item.getType() == Material.AIR) return;
 
         e.setCancelled(true);
         for (CodeButton button : this.buttonList) {
@@ -63,11 +62,11 @@ public class SafeMenu implements IMenu {
 
     @Override
     public void onClose(InventoryCloseEvent e) {
-        this.code.clear(this.getPlayer().getName());
+        this.code.clear(e.getPlayer().getName());
     }
 
     @Override
     public boolean isCancelled(Cancellable cancellable, int i) {
-        return this.cooldownPrevent.isCancelled(cancellable, i);
+        return this.cooldownPrevent.isCancelled(cancellable, (byte) i);
     }
 }
