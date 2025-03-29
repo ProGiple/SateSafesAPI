@@ -34,7 +34,7 @@ public class SafeMenu implements IMenu {
         this.player = player;
         this.buttonList = buttonList;
         this.safe = safe;
-        this.code = new Code(this.safe.getCode_length());
+        this.code = this.safe.getCode();
         this.inventory = Bukkit.createInventory(player, InventoryType.DISPENSER, Utils.color(title));
     }
 

@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.novasparkle.lunaspring.API.Configuration.Configuration;
 import org.novasparkle.lunaspring.API.Util.utilities.Utils;
 import org.novasparkle.lunaspring.LunaPlugin;
+import org.satellite.dev.progiple.satesafesapi.safes.menus.Code;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +21,7 @@ public abstract class Safe implements ISafe {
     private final LunaPlugin usedPlugin;
 
     private final String id = Utils.getRKey((byte) 18);
-    @Setter private int code_length = 3;
+    @Setter private Code code = new Code(3);
     public Safe(LunaPlugin lunaPlugin, Location location, Material material) {
         this.location = location;
         this.usedPlugin = lunaPlugin;
