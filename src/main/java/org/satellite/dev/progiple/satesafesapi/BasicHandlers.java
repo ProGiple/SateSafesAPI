@@ -17,7 +17,7 @@ public class BasicHandlers implements Listener {
 
         Location location = block.getLocation();
         Safe safe = Safe.getSafes().get(location);
-        if (safe != null) safe.onClick(e.getPlayer());
+        if (safe != null) safe.onClick(e);
     }
 
     @EventHandler
