@@ -59,6 +59,7 @@ public class SafeMenu implements IMenu {
 
     @Override
     public void onClose(InventoryCloseEvent e) {
+        this.code.clear(this.getPlayer().getName());
     }
 
     @Override

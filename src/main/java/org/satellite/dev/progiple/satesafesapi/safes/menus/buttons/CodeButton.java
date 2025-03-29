@@ -66,37 +66,33 @@ public class CodeButton extends Item {
     @Override
     public void onClick(InventoryClickEvent e) {
         IMenu iMenu = MenuManager.getActiveInventories().get(e.getInventory());
-
         Player player = iMenu.getPlayer();
+
+        String nick = player.getName().toLowerCase();
         if (iMenu instanceof SafeMenu safeMenu) {
             Code code = safeMenu.getCode();
-            if (code.getPicked_combination().contains(String.valueOf(this.getSlot()))) return;
+            if (code.getPicked_combination().get(nick).contains(String.valueOf(this.getSlot()))) return;
 
-            Config.debug(String.format("%s - %s - %s", code.getPicked_combination(), this.getSlot(), code.getCombination()));
-            code.addValue(this.getSlot());
-            if (code.getLength() == code.getPicked_combination().length()) {
-                if (!code.check()) {
-                    safeMenu.getButtonList().forEach(b -> {
-                        b.reset_button();
-                        b.insert(safeMenu);
-                    });
-
-                    safeMenu.getSafe().onBadAttempt(player);
-                    code.clear();
-                }
-            } else {
-                if (this.picked_name != null) this.setDisplayName(this.picked_name);
-
-                if (this.picked_material != null) this.setMaterial(this.picked_material);
-
-                if (this.picked_lore != null) this.setLore(this.picked_lore);
-                this.insert(safeMenu);
-            }
-
-            if (code.check()) {
+            code.addValue(nick, this.getSlot());
+            if (code.check(nick)) {
                 safeMenu.getSafe().onComplete(player);
                 player.closeInventory();
+                return;
             }
+
+            if (this.picked_name != null) this.setDisplayName(this.picked_name);
+            if (this.picked_material != null) this.setMaterial(this.picked_material);
+            if (this.picked_lore != null) this.setLore(this.picked_lore);
+
+            if (code.getPicked_combination().get(nick).length() >= code.getLength()) {
+                safeMenu.getButtonList().forEach(b -> {
+                    b.reset_button();
+                    b.insert(safeMenu);
+                });
+
+                safeMenu.getSafe().onBadAttempt(player);
+                code.clear(player.getName());
+            } else this.insert(safeMenu);
         }
     }
 }
