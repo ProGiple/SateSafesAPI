@@ -6,7 +6,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.satellite.dev.progiple.satesafesapi.safes.Safe;
 
@@ -26,12 +25,5 @@ public class BasicHandlers implements Listener {
         Location location = e.getBlock().getLocation();
         Safe safe = Safe.getSafes().get(location);
         if (safe != null) safe.onBreak(e);
-    }
-
-    @EventHandler
-    public void onPlace(BlockPlaceEvent e) {
-        Location location = e.getBlock().getLocation();
-        Safe safe = Safe.getSafes().get(location);
-        if (safe != null) safe.onPlace(e);
     }
 }
