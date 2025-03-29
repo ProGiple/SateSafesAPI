@@ -1,6 +1,7 @@
 package org.satellite.dev.progiple.satesafesapi.safes.menus;
 
 import lombok.Getter;
+import org.novasparkle.lunaspring.API.Util.utilities.LunaMath;
 import org.novasparkle.lunaspring.API.Util.utilities.Utils;
 import org.satellite.dev.progiple.satesafesapi.Config;
 
@@ -15,7 +16,20 @@ public class Code {
     private final Map<String, String> picked_combination = new HashMap<>();
     public Code(int length) {
         this.length = Math.min(Math.max(length, 2), 9);
-        this.combination = Utils.getRKey((byte) this.length, "123456789");
+
+        String kit = "123456789";
+        StringBuilder endValue = new StringBuilder();
+
+        byte kitSize = (byte) kit.toCharArray().length;
+        for (byte i = 0; i < this.length;) {
+            char c = kit.charAt(LunaMath.getRandom().nextInt(kitSize));
+            if (endValue.toString().contains(String.valueOf(c))) continue;
+
+            endValue.append(c);
+            i++;
+        }
+
+        this.combination = endValue.toString();
     }
 
     public boolean check(String nick) {
