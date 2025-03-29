@@ -60,8 +60,7 @@ public class CodeButton extends Item {
         IMenu iMenu = MenuManager.getActiveInventories().get(e.getInventory());
 
         Player player = iMenu.getPlayer();
-        if (iMenu instanceof SafeMenu) {
-            SafeMenu safeMenu = (SafeMenu) iMenu;
+        if (iMenu instanceof SafeMenu safeMenu) {
             Code code = safeMenu.getCode();
             if (code.getPicked_combination().contains(String.valueOf(this.getSlot()))) return;
 
@@ -76,6 +75,7 @@ public class CodeButton extends Item {
                         }
                     }
 
+                    safeMenu.getSafe().onBadAttempt(player);
                     code.clear();
                 }
             } else {
