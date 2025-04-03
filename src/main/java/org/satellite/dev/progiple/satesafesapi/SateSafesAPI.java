@@ -11,7 +11,7 @@ public final class SateSafesAPI extends LunaPlugin {
         plugin = this;
         this.saveDefaultConfig();
 
-        this.registerListener(new BasicHandlers());
+        this.registerListeners(new BasicHandlers());
         this.registerCommand(new Command(), "satesafesapi");
         this.initialize();
     }
